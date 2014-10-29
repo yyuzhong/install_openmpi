@@ -1,0 +1,17 @@
+#!/bin/bash
+. ./nodes.conf
+
+i=0
+len=${#allnodes[@]}
+echo $len
+while [ $i -lt $len ]
+do
+    myip=${allnodes[$i]}
+    echo $myip
+    scp install_mpi.sh  root@$myip:/tmp/
+    scp env_openmpi.conf  root@$myip:/tmp/
+    ssh root@$myip 'sh -c "/tmp/install_mpi.sh"'
+    echo "********  install openmpi to $myip  ********"
+    let i++
+done
+
